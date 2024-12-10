@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Power Rangers Trading Cards</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Bangers&display=swap" rel="stylesheet">
+    <style>
+        /* Reset and base styling */
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background: url('https://source.unsplash.com/1920x1080/?cartoon,sky') center/cover fixed;
+            color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar styling */
+        .navbar {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding: 15px;
+            text-align: center;
+            background: rgba(0, 123, 255, 0.8); /* Doraemon-themed light blue */
+            box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .navbar a {
+            color: #fff;
+            margin: 0 10px;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .navbar a:hover {
+            color: #ffcc00; /* Doraemon bell yellow */
+            text-shadow: 0 0 5px #ffcc00;
+        }
+
+        /* Content styling */
+        .container {
+            margin: 100px auto;
+            width: 90%;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Bangers', cursive;
+            color: #ff0000; /* Doraemon's red bow tie color */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Table styling */
+        .table-container {
+            overflow-x: auto; /* Allow horizontal scrolling */
+            max-height: 400px; /* Limit table height */
+            overflow-y: auto; /* Enable vertical scrolling */
+            margin-top: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th, table td {
+            border: 1px solid #ffffff33;
+            padding: 10px;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #0b0a0a;
+        }
+
+        table th {
+            font-weight: bold;
+            background: rgba(0, 123, 255, 0.8); /* Doraemon-themed red */
+            color: white;
+        }
+
+        /* Form styling */
+        .form-container {
+            background: rgba(0, 123, 255, 0.8); /* Doraemon-themed light blue */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-container h2 {
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .form-container input, .form-container select, .form-container button {
+            display: block;
+            margin: 10px auto;
+            padding: 10px;
+            width: 80%;
+            max-width: 300px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .form-container input, .form-container select {
+            background: #ffffff;
+            color: #333;
+        }
+
+        .form-container button {
+            background: #ffcc00; /* Doraemon bell yellow */
+            color: #333;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .form-container button:hover {
+            background: #ffdd33;
+        }
+
+        /* Filter and Sort Form */
+        .filter-sort-form select {
+            margin: 0 10px;
+        }
+
+        /* Table row hover effect */
+        table tbody tr:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div style="margin-top: 20px; text-align: center;">
+        <a href="/" style="text-decoration: none; color: #007bff; font-weight: bold;">Back to Main Page</a>
+    </div>
+    
+
+    <div class="navbar">
+        <a href="{{ url_for('Home_page') }}">Home</a>
+        <a href="{{ url_for('manage_events') }}">Customer Details</a>
+        <a href="{{ url_for('about') }}">Upcoming Events</a>
+    </div>
+    <div class="form-container">
+        <form action="{{ url_for('manage_events') }}" method="POST">
+            <h2>Add Customer Details</h2>
+            <input type="text" name="card_name" placeholder="Book Name" required>
+            <label for="color">Choose a Type:</label>
+            <select name="color" id="color" required>
+                <option value="" disabled selected>Select Type</option>
+                <option value="educational">Educational</option>
+                <option value="not">Not Educational</option>
+            </select>
+            <input type="number" name="power" placeholder="Cost" required>
+            <input type="text" name="dummy_card" placeholder="Customer Name" required>
+            <button type="submit">Add Details</button>
+        </form>
+
+        <form class="filter-sort-form" action="{{ url_for('manage_events') }}" method="GET">
+            <h2>Filter and Sort</h2>
+            <label>Sort by Type:</label>
+            <select name="filter_color">
+                <option value="">Select Type</option>
+                <option value="educational" {% if request.args.get('filter_color') == 'educational' %}selected{% endif %}>Educational</option>
+                <option value="not" {% if request.args.get('filter_color') == 'not' %}selected{% endif %}>Not Educational</option>
+            </select>
+            <label>Filter by Cost:</label>
+            <select name="sort_power">
+                <option value="asc" {% if request.args.get('sort_power') == 'asc' %}selected{% endif %}>Ascending</option>
+                <option value="desc" {% if request.args.get('sort_power') == 'desc' %}selected{% endif %}>Descending</option>
+            </select>
+            <button type="submit">Apply</button>
+        </form>
+    </div>
+    <div class="container">
+        <h1>Customer Details</h1>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Book Name</th>
+                        <th>Type of Book</th>
+                        <th>Cost</th>
+                        <th>Customer Name</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for card in cards %}
+                    <tr>
+                        <td>{{ card.name }}</td>
+                        <td>{{ card.color }}</td>
+                        <td>{{ card.power }}</td>
+                        <td>{{ card.dummy_card }}</td>
+                        <td>
+                            <a href="{{ url_for('update_event', id=card.id) }}">Update</a>
+                            <a href="{{ url_for('delete_event', id=card.id) }}" onclick="return confirm('Are you sure you want to delete this card?')">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

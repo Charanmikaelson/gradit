@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Bangers&display=swap" rel="stylesheet">
+    <style>
+        /* Reset and base styling */
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background: url('https://source.unsplash.com/1920x1080/?library,books') center/cover fixed;
+            color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar styling */
+        .navbar {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding: 15px;
+            text-align: center;
+            background: rgba(0, 123, 255, 0.8);
+            box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .navbar a {
+            color: #fff;
+            margin: 0 10px;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .navbar a:hover {
+            color: #ffcc00;
+            text-shadow: 0 0 5px #ffcc00;
+        }
+
+        /* Content styling */
+        .container {
+            margin: 80px auto 50px;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Bangers', cursive;
+            color: green;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Book cards */
+        .book-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .book-card {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            color: #333;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .book-card:hover {
+            transform: scale(1.1);
+            background-color: rgba(255, 215, 0, 0.8);
+            color: #fff;
+        }
+
+        .book-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .book-card h3 {
+            margin: 10px 0 5px;
+            font-size: 1rem;
+        }
+
+        .book-card p {
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div style="margin-top: 20px; text-align: center;">
+        <a href="/" style="text-decoration: none; color: #007bff; font-weight: bold;">Back to Main Page</a>
+    </div>
+    <div class="navbar">
+        <a href="{{ url_for('Home_page') }}">Home</a>
+        <a href="{{ url_for('manage_events') }}">Customer Details</a>
+        <a href="{{ url_for('about') }}">Upcoming Events</a>
+  
+    </div>
+
+    <div class="container">
+        <h1>Welcome to the Books Gallery</h1>
+        <div class="book-grid">
+            <div class="book-card">
+                <img src="https://via.placeholder.com/80" alt="Book 1">
+                <h3>Book Title 1</h3>
+                <p>Author 1</p>
+            </div>
+            <div class="book-card">
+                <img src="https://via.placeholder.com/80" alt="Book 2">
+                <h3>Book Title 2</h3>
+                <p>Author 2</p>
+            </div>
+            <div class="book-card">
+                <img src="https://via.placeholder.com/80" alt="Book 3">
+                <h3>Book Title 3</h3>
+                <p>Author 3</p>
+            </div>
+            <div class="book-card">
+                <img src="https://via.placeholder.com/80" alt="Book 4">
+                <h3>Book Title 4</h3>
+                <p>Author 4</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
